@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MobiHymnMaui.Elements.AnimatingView"
+    xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+    xmlns:ffil="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
+    x:Name="root">
+    <ContentView.Content>
+        <StackLayout>
+            <skia:SKLottieView
+                x:Name="animation"
+                RepeatCount="-1"
+                Source="done.json"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="CenterAndExpand"
+                IsVisible="{OnPlatform Android=True, iOS=False, MacCatalyst=False}"
+            />
+            <ffil:CachedImage
+                x:Name="gif"
+                IsVisible="{OnPlatform Android=False, iOS=True, MacCatalyst=True}"
+            />
+        </StackLayout>
+        
+    </ContentView.Content>
+</ContentView>
+
+<!---->

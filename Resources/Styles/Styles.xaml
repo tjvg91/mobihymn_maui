@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Color x:Key="Primary">#F5D200</Color>
+    <Color x:Key="PrimaryLight">#fff5bc</Color>
+    <Color x:Key="PrimaryText">#2D2D2D</Color>
+    <Color x:Key="Sepia">#faebd7</Color>
+    <Color x:Key="Gray">#464646</Color>
+    <Color x:Key="GrayLight">#d0d0d0</Color>
+            
+    <Color x:Key="White">#ffffff</Color>
+    <Color x:Key="Black">#141414</Color>
+    <Color x:Key="Brown">#8b6220</Color>
+    <Color x:Key="Red">#ff2627</Color>
+    <Color x:Key="Green">#009200</Color>
+    <Color x:Key="Orange">#DF7D38</Color>
+    <Color x:Key="Blue">#337def</Color>
+    <Color x:Key="Purple">#7237C5</Color>
+    <Color x:Key="Pink">#FF0073</Color>
+
+    <Style TargetType="Shell" ApplyToDerivedTypes="True">
+        <Setter Property="Shell.BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}" />
+        <Setter Property="Shell.ForegroundColor" Value="{OnPlatform WinUI={StaticResource Primary}, Default={StaticResource White}}" />
+        <Setter Property="Shell.TitleColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource SecondaryDarkText}}" />
+        <Setter Property="Shell.DisabledColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray950}}" />
+        <Setter Property="Shell.UnselectedColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray200}}" />
+        <Setter Property="Shell.NavBarHasShadow" Value="False" />
+        <Setter Property="Shell.TabBarBackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
+        <Setter Property="Shell.TabBarForegroundColor" Value="{AppThemeBinding Light={StaticResource Magenta}, Dark={StaticResource White}}" />
+        <Setter Property="Shell.TabBarTitleColor" Value="{AppThemeBinding Light={StaticResource Magenta}, Dark={StaticResource White}}" />
+        <Setter Property="Shell.TabBarUnselectedColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
+    </Style>
+
+    <Style TargetType="NavigationPage">
+        <Setter Property="BarBackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}" />
+        <Setter Property="BarTextColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource White}}" />
+        <Setter Property="IconColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource White}}" />
+    </Style>
+
+    <Style TargetType="TabbedPage">
+        <Setter Property="BarBackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray950}}" />
+        <Setter Property="BarTextColor" Value="{AppThemeBinding Light={StaticResource Magenta}, Dark={StaticResource White}}" />
+        <Setter Property="UnselectedTabColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray950}}" />
+        <Setter Property="SelectedTabColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
+    </Style>
+    <Style x:Key="BaseStyle" TargetType="Element">
+            <Setter Property="Shell.BackgroundColor" Value="{StaticResource Primary}" />
+            <Setter Property="Shell.ForegroundColor" Value="{StaticResource PrimaryText}" />
+            <Setter Property="Shell.TitleColor" Value="{StaticResource PrimaryText}" />
+            <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
+            <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
+            <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource Primary}" />
+            <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource PrimaryText}"/>
+            <Setter Property="Shell.TabBarUnselectedColor" Value="#95FFFFFF"/>
+            <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource PrimaryText}"/>
+        </Style>
+        <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
+        <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}"/>
+
+        <!--
+        Default Styles for all Flyout Items
+        https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/flyout#flyoutitem-and-menuitem-style-classes
+        -->
+        <Style Class="FlyoutItemLabelStyle" TargetType="Label">
+            <Setter Property="TextColor" Value="{AppThemeBinding Dark=White, Light={StaticResource PrimaryText},Default={StaticResource PrimaryText}}"></Setter>
+        </Style>
+        <Style Class="FlyoutItemLayoutStyle" TargetType="Layout" ApplyToDerivedTypes="True">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource PrimaryText}, Light=White,Default=White}" />
+                                <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{AppThemeBinding Dark=White, Light={StaticResource PrimaryText},Default={StaticResource PrimaryText}}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{StaticResource PrimaryText}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+
+        <!--
+        Custom Style you can apply to any Flyout Item
+        -->
+        <Style Class="MenuItemLayoutStyle" TargetType="Layout" ApplyToDerivedTypes="True">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{StaticResource PrimaryText}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+
+
+</ResourceDictionary>

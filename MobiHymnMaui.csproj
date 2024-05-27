@@ -1,0 +1,229 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
+		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
+		<!-- <TargetFrameworks>$(TargetFrameworks);net8.0-tizen</TargetFrameworks> -->
+
+		<!-- Note for MacCatalyst:
+		The default runtime is maccatalyst-x64, except in Release config, in which case the default is maccatalyst-x64;maccatalyst-arm64.
+		When specifying both architectures, use the plural <RuntimeIdentifiers> instead of the singular <RuntimeIdentifier>.
+		The Mac App Store will NOT accept apps with ONLY maccatalyst-arm64 indicated;
+		either BOTH runtimes must be indicated or ONLY macatalyst-x64. -->
+		<!-- For example: <RuntimeIdentifiers>maccatalyst-x64;maccatalyst-arm64</RuntimeIdentifiers> -->
+
+		<OutputType>Exe</OutputType>
+		<RootNamespace>MobiHymnMaui</RootNamespace>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<!-- Display name -->
+		<ApplicationTitle>Mobihymn Maui</ApplicationTitle>
+
+		<!-- App Identifier -->
+		<ApplicationId>com.mobihymn.maui</ApplicationId>
+
+		<!-- Versions -->
+		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationVersion>1</ApplicationVersion>
+
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<NoWarn>$(NoWarn);CS8612;CS0618;CS8619;CS0168;XC0022;XC0023;CS8600;CS8618;CS8601;CS8602;CS8603;CS8604;CS8625;CS0219;CS8625;CS0067;CS0414;CS0649;CS0414;CS0168;CS1998:CS8619;CS1998;CS8622;</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
+	  <CreatePackage>false</CreatePackage>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	  <WarningLevel>4</WarningLevel>
+	</PropertyGroup>
+	<ItemGroup>
+		<!-- App Icon -->
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+
+		<!-- Splash Screen -->
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+
+		<!-- Images -->
+		<MauiFont Include="Resources\Fonts\*" />
+
+		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="9.0.0" />
+		<PackageReference Include="FirebaseDatabase.net" Version="4.2.0" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.40" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.40" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
+		<PackageReference Include="HtmlAgilityPack" Version="1.11.61" />
+		<PackageReference Include="Polly" Version="8.4.0" />
+		<PackageReference Include="CardsView.Maui" Version="0.0.6" />
+		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0" />
+		<PackageReference Include="FFImageLoading.Maui" Version="1.2.4" />
+		<PackageReference Include="CommunityToolkit.Maui.Core" Version="9.0.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.8" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Utils\Orientation\" />
+	  <None Remove="Resources\Raw\bookmark-deleted.json" />
+	  <None Remove="Resources\Raw\bookmark-saved.json" />
+	  <None Remove="Resources\Raw\done.json" />
+	  <None Remove="Resources\Raw\download.json" />
+	  <None Remove="Resources\Raw\error.json" />
+	  <None Remove="Resources\Raw\heart.json" />
+	  <None Remove="Resources\Raw\history-dark.json" />
+	  <None Remove="Resources\Raw\history-light.json" />
+	  <None Remove="Resources\Raw\no-internet-dark.json" />
+	  <None Remove="Resources\Raw\no-internet-light.json" />
+	  <None Remove="Resources\Raw\not-found.json" />
+	  <None Remove="Resources\Raw\read-play.json" />
+	  <None Remove="Resources\Raw\save-music.json" />
+	  <None Remove="Resources\Raw\search-dark.json" />
+	  <None Remove="Resources\Raw\search-light.json" />
+	  <None Remove="Resources\Raw\settingup.json" />
+	  <None Remove="Resources\Raw\welcome.json" />
+	  <None Remove="Resources\Images\bookmark-deleted.gif" />
+	  <None Remove="Resources\Images\bookmark-saved.gif" />
+	  <None Remove="Resources\Images\done.gif" />
+	  <None Remove="Resources\Images\download.gif" />
+	  <None Remove="Resources\Images\error.gif" />
+	  <None Remove="Resources\Images\heart.gif" />
+	  <None Remove="Resources\Images\history-dark.gif" />
+	  <None Remove="Resources\Images\history-light.gif" />
+	  <None Remove="Resources\Images\no-internet-dark.gif" />
+	  <None Remove="Resources\Images\no-internet-light.gif" />
+	  <None Remove="Resources\Images\not-found.gif" />
+	  <None Remove="Resources\Images\read-play.gif" />
+	  <None Remove="Resources\Images\save-music.gif" />
+	  <None Remove="Resources\Images\search-dark.gif" />
+	  <None Remove="Resources\Images\search-light.gif" />
+	  <None Remove="Resources\Images\settingup.gif" />
+	  <None Remove="Resources\Images\welcome.gif" />
+	  <None Remove="Resources\GIF\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Utils\Orientation\" />
+	  <Folder Include="Resources\GIF\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <BundleResource Include="Resources\Raw\bookmark-deleted.json" />
+	  <BundleResource Include="Resources\Raw\bookmark-saved.json" />
+	  <BundleResource Include="Resources\Raw\done.json" />
+	  <BundleResource Include="Resources\Raw\download.json" />
+	  <BundleResource Include="Resources\Raw\error.json" />
+	  <BundleResource Include="Resources\Raw\heart.json" />
+	  <BundleResource Include="Resources\Raw\history-dark.json" />
+	  <BundleResource Include="Resources\Raw\history-light.json" />
+	  <BundleResource Include="Resources\Raw\no-internet-dark.json" />
+	  <BundleResource Include="Resources\Raw\no-internet-light.json" />
+	  <BundleResource Include="Resources\Raw\not-found.json" />
+	  <BundleResource Include="Resources\Raw\read-play.json" />
+	  <BundleResource Include="Resources\Raw\save-music.json" />
+	  <BundleResource Include="Resources\Raw\search-dark.json" />
+	  <BundleResource Include="Resources\Raw\search-light.json" />
+	  <BundleResource Include="Resources\Raw\settingup.json" />
+	  <BundleResource Include="Resources\Raw\welcome.json" />
+	  <BundleResource Include="Resources\Images\bookmark-deleted.gif" />
+	  <BundleResource Include="Resources\Images\bookmark-saved.gif" />
+	  <BundleResource Include="Resources\Images\done.gif" />
+	  <BundleResource Include="Resources\Images\download.gif" />
+	  <BundleResource Include="Resources\Images\error.gif" />
+	  <BundleResource Include="Resources\Images\heart.gif" />
+	  <BundleResource Include="Resources\Images\history-dark.gif" />
+	  <BundleResource Include="Resources\Images\history-light.gif" />
+	  <BundleResource Include="Resources\Images\no-internet-dark.gif" />
+	  <BundleResource Include="Resources\Images\no-internet-light.gif" />
+	  <BundleResource Include="Resources\Images\not-found.gif" />
+	  <BundleResource Include="Resources\Images\read-play.gif" />
+	  <BundleResource Include="Resources\Images\save-music.gif" />
+	  <BundleResource Include="Resources\Images\search-dark.gif" />
+	  <BundleResource Include="Resources\Images\search-light.gif" />
+	  <BundleResource Include="Resources\Images\settingup.gif" />
+	  <BundleResource Include="Resources\Images\welcome.gif" />
+	  <BundleResource Include="Resources\Images\bookmark-deleted.gif" />
+	  <BundleResource Include="Resources\Images\bookmark-saved.gif" />
+	  <BundleResource Include="Resources\Images\done.gif" />
+	  <BundleResource Include="Resources\Images\dotnet_bot.png" />
+	  <BundleResource Include="Resources\Images\download.gif" />
+	  <BundleResource Include="Resources\Images\error.gif" />
+	  <BundleResource Include="Resources\Images\heart.gif" />
+	  <BundleResource Include="Resources\Images\history-dark.gif" />
+	  <BundleResource Include="Resources\Images\history-light.gif" />
+	  <BundleResource Include="Resources\Images\no-internet-dark.gif" />
+	  <BundleResource Include="Resources\Images\no-internet-light.gif" />
+	  <BundleResource Include="Resources\Images\not-found.gif" />
+	  <BundleResource Include="Resources\Images\read-play.gif" />
+	  <BundleResource Include="Resources\Images\save-music.gif" />
+	  <BundleResource Include="Resources\Images\search-dark.gif" />
+	  <BundleResource Include="Resources\Images\search-light.gif" />
+	  <BundleResource Include="Resources\Images\settingup.gif" />
+	  <BundleResource Include="Resources\Images\welcome.gif" />
+	</ItemGroup>
+	<ItemGroup>
+	  <MauiAsset Update="Resources\Raw\bookmark-deleted.json">
+	    <LogicalName>bookmark-deleted.json</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\bookmark-saved.json">
+	    <LogicalName>bookmark-saved.json</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\done.json">
+	    <LogicalName>done.json</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\download.json">
+	    <LogicalName>download.json</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\error.json">
+	    <LogicalName>error.json</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\heart.json">
+	    <LogicalName>heart.json</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\history-dark.json">
+	    <LogicalName>history-dark.json</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\history-light.json">
+	    <LogicalName>history-light.json</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\no-internet-dark.json">
+	    <LogicalName>no-internet-dark.json</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\no-internet-light.json">
+	    <LogicalName>no-internet-light.json</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\not-found.json">
+	    <LogicalName>not-found.json</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\read-play.json">
+	    <LogicalName>read-play.json</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\save-music.json">
+	    <LogicalName>save-music.json</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\search-dark.json">
+	    <LogicalName>search-dark.json</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\search-light.json">
+	    <LogicalName>search-light.json</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\settingup.json">
+	    <LogicalName>settingup.json</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\welcome.json">
+	    <LogicalName>welcome.json</LogicalName>
+	  </MauiAsset>
+	</ItemGroup>
+</Project>

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<toolkit:Popup
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:elems="clr-namespace:MobiHymnMaui.Elements"
+    x:Class="MobiHymnMaui.Views.Popups.ToastPopup"
+	x:Name="root">
+	<StackLayout >
+		<AbsoluteLayout
+            WidthRequest="200"
+            HeightRequest="150"
+            IsClippedToBounds="True">
+			<elems:AnimatingView
+				x:Name="ElemAnim"
+				Source="{Binding PopupAnim, Source={x:Reference root}}"
+				Size="{Binding PopupAnimSize, Source={x:Reference root}}"
+				AbsoluteLayout.LayoutBounds="{Binding LayoutBounds, Source={x:Reference root}}"
+                AbsoluteLayout.LayoutFlags="All"
+			/>
+		</AbsoluteLayout>
+		<Label
+			x:Name="ElemLabel"
+			Text="{Binding PopupLabel, Source={x:Reference root}}"
+			HorizontalTextAlignment="Center"
+			FontSize="Small"
+			TextColor="{StaticResource Primary}"
+			Margin="0,-10,0,0"
+		/>
+	</StackLayout>
+    
+</toolkit:Popup>
+
